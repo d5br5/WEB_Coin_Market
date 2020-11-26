@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// xrp, 리플이라는 코인이 있는데, xrp
-
 const Asset = mongoose.model("Asset", {
   user: { ref: "User", type: Schema.Types.ObjectId },
   coin: { ref: "Coin", type: Schema.Types.ObjectId },
