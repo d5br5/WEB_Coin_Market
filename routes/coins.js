@@ -48,16 +48,34 @@ router.post("/:coin_name/buy", authentication, async (req, res) => {
   res.send({ buyCoin, quantity });
 
   const doc_usd = await Coin.find({ code: 'usd' });
-  const code_usd = doc_usd[0]._id;
-  const assetInfo_usd = await Asset.find({ user: req.user, coin: code_usd });
+  const id_usd = doc_usd[0]._id
+  const assetInfo_usd = await Asset.find({ user: req.user, coin: id_usd});
   const asset_usd = assetInfo_usd[0].quantity;
- 
-  const prices = await coinData();
-  const coinQuantity = (Number(quantity)).toFixed(4);
-  const coinPrice = prices[buyCoin];
 
-  if (asset_usd > coinPrice * coinQuantity){
+  const doc_coin = await Coin.find({ code: buyCoin });
+  const id_coin = doc_coin[0]._id
+  const assetInfo_coin = await Asset.find({ user: req.user, coin: id_coin});
+  const asset_coin = assetInfo_coin[0].quantity;
+
+
+  const prices = await coinData();
+  const coinQuantity = parseFloat(Number(quantity).toFixed(4));
+  const coinPrice = prices[buyCoin];
+  const totalPrice = coinQuantity * coinPrice;
+
+  if (asset_usd > totalPrice) {
     console.log('rich to buy');
+    const usdAfter = asset_usd - totalPrice ;
+    const coinAfter = asset_coin + coinQuantity;
+    console.log(coinAfter);
+    console.log(usdAfter);
+    async () => {
+      const dealCoin = await Asset.updateOne({ coin: id_coin, user: req.user }, { $set: {quantity:coinAfter} });
+      await dealCoin.save();
+
+      const dealUsd = await Asset.updateOne({ code: id_usd, user: req.user }, { $set: {quantity:usdAfter} });
+      await dealUsd.save();
+    }
   } else {
     console.log('fool guyss..');
   }
