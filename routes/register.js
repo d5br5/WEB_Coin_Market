@@ -1,8 +1,6 @@
-var express = require('express')
-var router = express.Router()
-const jwt = require("jsonwebtoken");
-const fs = require('fs');
-const crypto = require("crypto");
+var express = require('express');
+var router = express.Router();
+
 const { body, validationResult } = require("express-validator");
 const { encryptPassword } = require("../lib/encrypt");
 
