@@ -26,12 +26,14 @@ app.use(bodyParser.json());
 
 //routing
 const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
+const registerRouter = require('./routes/register');
+const loginRouter = require('./routes/login');
 const coinRouter = require('./routes/coins');
 const assetRouter = require('./routes/assets');
 
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
+app.use('/register', registerRouter);
+app.use('/login', loginRouter);
 app.use('/coins', coinRouter);
 app.use('/assets', assetRouter);
 
