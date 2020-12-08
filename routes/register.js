@@ -29,33 +29,29 @@ router.post('/',
         const user = new User({ email, name, password: encryptedPassword });
         await user.save();
 
-        const coin0 = await Coin.findOne({ code: "usd" });
-        const assetUsd = new Asset({ user, coin : coin0, quantity: 100000 });
-        await assetUsd.save();
+        const coin = {
+            usd: await Coin.findOne({ code: "usd" }),
+            btc: await Coin.findOne({ code: "bitcoin" }),
+            eos: await Coin.findOne({ code: "eos" }),
+            eth: await Coin.findOne({ code: "ethereum" }),
+            bch: await Coin.findOne({ code: "bitcoin-cash" }),
+            trx: await Coin.findOne({ code: "tron" }),
+            xrp: await Coin.findOne({ code: "ripple" })
+        }
+
+        const asset = {
+            usd: new Asset({ user, coin: coin.usd, quantity: 100000 }),
+            btc: new Asset({ user, coin: coin.btc, quantity: 0 }),
+            eos: new Asset({ user, coin: coin.eos, quantity: 0 }),
+            eth: new Asset({ user, coin: coin.eth, quantity: 0 }),
+            bch: new Asset({ user, coin: coin.bch, quantity: 0 }),
+            trx: new Asset({ user, coin: coin.trx, quantity: 0 }),
+            xrp: new Asset({ user, coin: coin.xrp, quantity: 0 })
+        }
         
-        const coin1 = await Coin.findOne({ code: "bitcoin" });
-        const asset1 = new Asset({ user, coin:coin1, quantity: 0 });
-        await asset1.save();
-
-        const coin2 = await Coin.findOne({ code: "eos" });
-        const asset2 = new Asset({ user, coin:coin2, quantity: 0 });
-        await asset2.save();
-
-        const coin3 = await Coin.findOne({ code: "ethereum" });
-        const asset3 = new Asset({ user, coin:coin3, quantity: 0 });
-        await asset3.save();
-
-        const coin4 = await Coin.findOne({ code: "bitcoin-cash" });
-        const asset4 = new Asset({ user, coin:coin4, quantity: 0 });
-        await asset4.save();
-
-        const coin5 = await Coin.findOne({ code: "tron" });
-        const asset5 = new Asset({ user, coin:coin5, quantity: 0 });
-        await asset5.save();
-
-        const coin6 = await Coin.findOne({ code: "ripple" });
-        const asset6 = new Asset({ user, coin:coin6, quantity: 0 });
-        await asset6.save();
+        Object.keys(asset).forEach( async (element) => {
+            await asset[element].save();
+        });
 
         return res.sendStatus(200);
     }
