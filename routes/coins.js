@@ -130,7 +130,7 @@ router.get("/:coin_name/buy/all", authentication, async (req, res) => {
 
   const prices = await coinData();
   const coinPrice = prices[buyCoin];
-  const canBuyQ = Math.floor(Number(10000 * asset.usd / coinPrice)) / 10000;
+  const canBuyQ = Math.floor(Number(10000 * asset.usd / coinPrice)) / 10000; //n.toPrecision(4)
   const totalPrice = canBuyQ * coinPrice;
 
   if (totalPrice > 0) {

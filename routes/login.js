@@ -1,10 +1,13 @@
-var express = require('express');
+var express = require('express'); 
 var router = express.Router();
+
+const crypto = require('crypto');
 
 const jwt = require("jsonwebtoken");
 const { encryptPassword } = require("../lib/encrypt");
 
 const { User } = require("../models/user");
+const { Key } = require("../models/key");
 
 
 router.post('/', async function (req, res) {
@@ -13,14 +16,21 @@ router.post('/', async function (req, res) {
         email,
         password: encryptPassword(password)
     });
+
     if (!user) return res.sendStatus(404);
 
-    jwt.sign({user}, 'secretkey',async (err,token)=>{
-        const key=token
-        user.key=key;
-        await user.save();
-        res.send({key});
-    });
+    const publicKey = crypto.randomBytes(64).toString('hex');
+    const secretKey = crypto.randomBytes(64).toString('hex');
+    const psKey = new Key({ user, publicKey, secretKey });
+    await psKey.save();
+
+    // 클라이언트에서 토큰 생성하기 귀찮을때 생성 함수..
+    // jwt.sign({pub: publicKey}, secretKey, {expiresIn:1000*60*60}, async (err,token)=>{
+    // console.log(token);
+    // })
+
+    res.send({publicKey, secretKey});
+    
 });
 
 module.exports = router;
