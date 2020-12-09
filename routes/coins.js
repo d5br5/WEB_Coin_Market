@@ -55,13 +55,12 @@ router.post("/:coin_name/buy", authentication, async (req, res) => {
 
     await assetInfo.coin.save();
     await assetInfo.usd.save();
-
-    const assets = await wallet(req, res);
-    console.log(assets);
-    res.send(assets);
+    
+    console.log('done!');
+    res.send({price:coinPrice, quantity: coinQuantity});
   } else {
     console.log('fool guyss.. check your usd asset!');
-    res.sendStatus(404);
+    res.status(402).json({ errors: { asset: "not enough usd.." } });
   }
 });
 
@@ -99,12 +98,11 @@ router.post("/:coin_name/sell", authentication, async (req, res) => {
     await assetInfo.coin.save();
     await assetInfo.usd.save();
 
-    const assets = await wallet(req, res);
-    console.log(assets);
-    res.send(assets);
+    console.log('done!');
+    res.send({price:coinPrice, quantity: coinQuantity});
   } else {
     console.log('fool guyss.. check your coin asset!');
-    res.sendStatus(404);
+    res.status(402).json({ errors: { asset: "not enough coin.." } });
   }
 });
 
@@ -141,12 +139,11 @@ router.get("/:coin_name/buy/all", authentication, async (req, res) => {
 
     await assetInfo.coin.save();
     await assetInfo.usd.save();
-
-    const assets = await wallet(req, res);
-    console.log(assets);
-    res.send(assets);
+    console.log('done!');
+    res.send({price:coinPrice, quantity: canBuyQ});
   } else {
     console.log('fool guyss.. check your usd asset!');
+    res.status(402).json({ errors: { asset: "not enough usd.." } });
   }
 
 });
@@ -184,11 +181,11 @@ router.get("/:coin_name/sell/all", authentication, async (req, res) => {
     await assetInfo.coin.save();
     await assetInfo.usd.save();
 
-    const assets = await wallet(req, res);
-    console.log(assets);
-    res.send(assets);
+    console.log('done!');
+    res.send({price:coinPrice, quantity: canSellQ});
   } else {
     console.log('fool guyss.. check your coin asset!');
+    res.status(402).json({ errors: { asset: "not enough usd.." } });
   }
 });
 
