@@ -25,7 +25,7 @@ router.post('/', async function (req, res) {
     await psKey.save();
 
     // 클라이언트에서 토큰 생성하기 귀찮을때 생성 함수..
-    // jwt.sign({pub: publicKey}, secretKey, {expiresIn:1000*60*60}, async (err,token)=>{
+    // jwt.sign({pub: publicKey}, secretKey, {expiresIn :30}, async (err,token)=>{
     // console.log(token);
     // })
 
