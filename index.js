@@ -1,15 +1,7 @@
 const express = require("express");
 const app = express();
-app.use(express.static('public'));
-
-const jwt=require("jsonwebtoken");
 const mongoose = require("mongoose");
-const fs = require("fs");
 const bodyParser = require('body-parser');
-const sanitizeHtml = require('sanitize-html');
-
-const helmet = require("helmet");
-app.use(helmet());
 
 const port = process.env.PORT || 3000;
 
