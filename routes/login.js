@@ -17,7 +17,7 @@ router.post('/', async function (req, res) {
         password: encryptPassword(password)
     });
 
-    if (!user) return res.sendStatus(404);
+    if (!user) return res.status(404).send('No User~');
 
     const publicKey = crypto.randomBytes(64).toString('hex');
     const secretKey = crypto.randomBytes(64).toString('hex');
@@ -25,9 +25,9 @@ router.post('/', async function (req, res) {
     await psKey.save();
 
     // 클라이언트에서 토큰 생성하기 귀찮을때 생성 함수..
-    // jwt.sign({pub: publicKey}, secretKey, {expiresIn :5*60}, async (err,token)=>{
-    // console.log(token);
-    // })
+    jwt.sign({pub: publicKey}, secretKey, {expiresIn :5*60}, async (err,token)=>{
+    console.log(token);
+    })
 
     res.send({publicKey, secretKey});
     

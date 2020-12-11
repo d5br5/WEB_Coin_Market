@@ -31,12 +31,12 @@ router.post('/',
 
         const coin = {
             usd: await Coin.findOne({ code: "usd" }),
-            btc: await Coin.findOne({ code: "bitcoin" }),
+            btc: await Coin.findOne({ code: "btc" }),
             eos: await Coin.findOne({ code: "eos" }),
-            eth: await Coin.findOne({ code: "ethereum" }),
-            bch: await Coin.findOne({ code: "bitcoin-cash" }),
-            trx: await Coin.findOne({ code: "tron" }),
-            xrp: await Coin.findOne({ code: "ripple" })
+            eth: await Coin.findOne({ code: "eth" }),
+            bch: await Coin.findOne({ code: "bch" }),
+            trx: await Coin.findOne({ code: "trx" }),
+            xrp: await Coin.findOne({ code: "xrp" })
         }
 
         const asset = {
