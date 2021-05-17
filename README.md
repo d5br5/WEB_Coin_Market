@@ -3,14 +3,7 @@
 가상의 코인 거래소를 제작한다. 유저는 회원가입, 자산 조회, 시세 조회, 구매 및 판매의 행위를 할 수 있다.  
 
 
-## 제출자 정보
-- 이름 : 김도형
-- 학번 : 2015-18362
-- 소속 : 공과대학 기계항공공학부
-- 전공 : 기계공학 주전공, 벤처경영학 연합전공
-
-
-## CodeSandbox link
+## 구현 완료 CodeSandbox link
 https://codesandbox.io/s/naughty-browser-5rvjd?file=/src/index.js
 
 
