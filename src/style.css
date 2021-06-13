@@ -1,48 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 30px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+h1{
+    margin: 60px;
+    font-size: 40px;
+}
+h3 {
+    margin: 10px;
+}
+
+h4 {
+    margin: 5px;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 
-.login-form{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.App{
-  text-align: center;
+.App {
+    text-align: center;
 }
 
-.section{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+.section {
+    margin: 50px auto;
+    width: 1100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
-.create-order{
-  display: flex;
+.create-order {
+    display: flex;
 
-  flex-direction: column;
+    flex-direction: column;
 }
 
-.market{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 50px auto;
+.postOrder {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: auto;
 }
 
-.contents{
-  width: 60%;
+.postAndDeleteOrder {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+#orderBooks {
+
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.orderBookTitle {
+    border: 2px solid black;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.oneOrder {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.oneOrderPrice {
+    width: 50%;
+    padding-left: 20px;
+}
+
+.oneOrderQuantity {
+    width: 50%;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.sell {
+    background-color: #98B9F3;
+    color: #1444AB;
+
+}
+
+.buy {
+    background-color: #F9BCCE;
+    color: #D30B47;
+}
+
+.eachOrderDeletable {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 300px;
+    margin-bottom: 10px;
+    padding: 0 0 10px 0;
+}
+
+.incompleteOrderCell {
+    display: flex;
+    flex-direction: row;
+}
+
+.buyCell {
+    border-color: #D30B47;
+    background-color: #FFEDEE;
+}
+
+.sellCell {
+    border-color: #1444AB;
+    background-color: #EDF1FF;
+}
+
+.cellTitleBuy {
+    color: #D30B47;
+}
+
+.cellTitleSell {
+    color: #1444AB;
+}
+
+.cellLeft {
+    width: 40%;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.cellRight {
+    width: 60%;
+    padding-right: 20px;
+    text-align: right;
+}
+
+
+.orderQuantity {
+    color: gray;
+}
+
+.ordersDeletable {
+    width: 300px;
+    margin: 50px auto;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+
+}
+
+.incompleteOrderTitle {
+    margin: 20px auto;
+    border: 2px solid black;
+    border-radius: 8px;
+    margin: 0 0 30px 0;
+    padding: 10px 0
+}
+
+.userInfo {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.assetInfo {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-top: 50px;
+}
+
+.eachAsset {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+
+}
+
+.assetContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.assetSymbol {
+    width: 30%;
+
+}
+
+.assetQuantity {
+    width: 40%;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.infoTitle {
+    border-bottom: 2px solid black;
+
+}
+
+.infoSection {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.buyTable {
+    border-top: 2px solid #D30B47;
+    border-left: 2px solid #D30B47;
+    border-right: 2px solid #D30B47;
+}
+
+.sellTable {
+    border-bottom: 2px solid #1444AB;
+    border-left: 2px solid #1444AB;
+    border-right: 2px solid #1444AB;
 }
