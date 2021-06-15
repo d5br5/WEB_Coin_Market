@@ -1,26 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 
+/*tag*/
 * {
     font-family: 'Noto Sans KR', sans-serif;
     line-height: 30px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
 
-h1{
-    margin: 60px;
-    font-size: 40px;
-}
-h3 {
-    margin: 10px;
-}
-
-h4 {
-    margin: 5px;
 }
 
 body {
@@ -30,7 +14,19 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
 
+h1 {
+    margin: 60px;
+    font-size: 40px;
+}
+
+h3 {
+    margin: 10px;
+}
+
+h4 {
+    margin: 5px;
 }
 
 code {
@@ -39,11 +35,7 @@ code {
 }
 
 
-.login-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+/*App*/
 
 .App {
     text-align: center;
@@ -57,6 +49,13 @@ code {
     justify-content: space-around;
     align-items: flex-start;
 }
+
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 
 .create-order {
     display: flex;
@@ -101,6 +100,18 @@ code {
     padding-left: 20px;
 }
 
+.buyTable {
+    border-bottom: 2px solid #D30B47;
+    border-left: 2px solid #D30B47;
+    border-right: 2px solid #D30B47;
+}
+
+.sellTable {
+    border-top: 2px solid #1444AB;
+    border-left: 2px solid #1444AB;
+    border-right: 2px solid #1444AB;
+}
+
 .oneOrderQuantity {
     width: 50%;
     text-align: right;
@@ -110,7 +121,6 @@ code {
 .sell {
     background-color: #98B9F3;
     color: #1444AB;
-
 }
 
 .buy {
@@ -131,6 +141,8 @@ code {
 .incompleteOrderCell {
     display: flex;
     flex-direction: row;
+    font-size: 13px;
+    line-height: 13px;
 }
 
 .buyCell {
@@ -152,19 +164,20 @@ code {
 }
 
 .cellLeft {
-    width: 40%;
+    width: 30%;
     padding-left: 20px;
     text-align: left;
+    line-height: 22px;
 }
 
 .cellRight {
-    width: 60%;
+    line-height: 22px;
+    width: 70%;
     padding-right: 20px;
     text-align: right;
 }
 
-
-.orderQuantity {
+.orderGray {
     color: gray;
 }
 
@@ -177,7 +190,6 @@ code {
     display: flex;
     flex-direction: column;
     width: 400px;
-
 }
 
 .incompleteOrderTitle {
@@ -236,14 +248,3 @@ code {
     width: 100%;
 }
 
-.buyTable {
-    border-top: 2px solid #D30B47;
-    border-left: 2px solid #D30B47;
-    border-right: 2px solid #D30B47;
-}
-
-.sellTable {
-    border-bottom: 2px solid #1444AB;
-    border-left: 2px solid #1444AB;
-    border-right: 2px solid #1444AB;
-}

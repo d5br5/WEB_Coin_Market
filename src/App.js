@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {loginByKey} from "./Api";
-import CoinFactory from "./components/CoinFactory";
+import React, {useEffect, useState} from 'react';
+import {loginByKey} from './Api';
+import CoinFactory from './components/CoinFactory';
 
 function App() {
 
-    const LOGIN_KEY = "LOGIN_KEY";
-    const LOGIN_NAME = "LOGIN_NAME"
+    const LOGIN_KEY = 'LOGIN_KEY';
+    const LOGIN_NAME = 'LOGIN_NAME';
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
@@ -26,6 +26,7 @@ function App() {
                         setUser({LOGIN_NAME: name, LOGIN_KEY: lsKey});
                     }
                 }
+
                 keyLogin();
             } catch (e) {
                 localStorage.removeItem(LOGIN_KEY);
@@ -37,9 +38,9 @@ function App() {
     }, []);
 
     return (
-        <div className="App">
+        <div className='App'>
             {init ? <CoinFactory isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
-                                 user={user} setUser={setUser}/> : "initializing...."}
+                                 user={user} setUser={setUser}/> : 'initializing....'}
         </div>
     );
 };
