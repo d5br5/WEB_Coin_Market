@@ -6,7 +6,8 @@ React를 활용하여 간단한 코인 거래소 웹 클라이언트를 제작.
 
 
 ## Implement
-- [https://snu_coin_dohkim.surge.sh](https://snu_coin_dohkim.surge.sh)
+- html, css, js, Reactjs
+- [snu_coin_dohkim](https://snu_coin_dohkim.surge.sh)
 
 ## 기능 명세
 
