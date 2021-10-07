@@ -5,7 +5,7 @@ import {
 	indexRouter,
 	createCoinRouter,
 	registerRouter,
-} from "./routes/manager.js";
+} from "./routes/routeManager.js";
 
 import dotenv from "dotenv";
 dotenv.config();

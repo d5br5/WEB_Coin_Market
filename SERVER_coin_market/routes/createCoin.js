@@ -1,5 +1,5 @@
 import express from "express";
-import {Coin} from "../models/manager.js";
+import {Coin} from "../models/modelManager.js";
 
 const router = express.Router();
 

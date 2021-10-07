@@ -1,6 +1,6 @@
 import express from "express";
 import {body, validationResult} from "express-validator";
-import {User, Coin, Key, Asset} from "../models/manager.js";
+import {User, Coin, Asset} from "../models/modelManager.js";
 import {encryptPassword} from "../lib/encrypt.js";
 import {coinList} from "../datas/coinList.js";
 
@@ -9,7 +9,7 @@ router.post(
 	"/",
 	[
 		body("name").isAlphanumeric().isLength({min: 4, max: 12}),
-		body("email").isEmail().isLength({max: 100}),
+		body("email").isEmail().isLength({max: 30}),
 		body("password").isLength({min: 8, max: 16}),
 	],
 	async (req, res) => {
@@ -19,7 +19,7 @@ router.post(
 		}
 		const {email, name, password} = req.body;
 		if (await User.findOne({email})) {
-			return res.send(400).json({errors: {email: "Already registered"}});
+			return res.status(400).json({errors: {email: "Already registered"}});
 		}
 
 		const encryptedPassword = encryptPassword(password);
@@ -40,7 +40,7 @@ router.post(
 			});
 		});
 		Object.keys(asset).forEach(async (elem) => await asset[elem].save());
-		return res.sendStatus(200);
+		return res.status(200).json({result: "Created!"});
 	}
 );
 
