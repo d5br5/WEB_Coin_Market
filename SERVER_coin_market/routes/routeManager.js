@@ -4,6 +4,7 @@ import registerRouter from "./register.js";
 import loginRouter from "./login.js";
 import coinRouter from "./coins.js";
 import assetRouter from "./assets.js";
+import tradeRouter from "./trade.js";
 
 export {
 	indexRouter,
@@ -12,4 +13,5 @@ export {
 	loginRouter,
 	coinRouter,
 	assetRouter,
+	tradeRouter,
 };

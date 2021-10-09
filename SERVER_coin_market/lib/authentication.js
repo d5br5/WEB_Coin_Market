@@ -20,13 +20,9 @@ export const authentication = async (req, res, next) => {
 	}
 
 	const psKey = await Key.findOne({publicKey: decodedPK});
-	console.log(psKey);
 
 	try {
 		jwt.verify(key, psKey.secretKey, function (err, decoded) {
-			console.log(decoded);
-			console.log(Date.now());
-
 			if (err || decoded.exp * 1000 < Date.now()) {
 				if (err) console.log("token error happend!");
 				throw e;

@@ -20,6 +20,7 @@ app.use("/register", Routers.registerRouter);
 app.use("/login", Routers.loginRouter);
 app.use("/coins", Routers.coinRouter);
 app.use("/assets", Routers.assetRouter);
+app.use("/trade", Routers.tradeRouter);
 
 app.use(function (req, res) {
 	res.status(404).send("404 error : No Such Page");
