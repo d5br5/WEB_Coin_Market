@@ -29,16 +29,20 @@ router.post(
 		const coin = {};
 		const asset = {};
 		const coinArray = Object.keys(coinList);
-		coinArray.forEach(async (coinName) => {
-			coin[coinName] = await Coin.findOne({code: coinList[coinName].code});
-		});
-		coinArray.forEach(async (coinName) => {
-			asset[coinName] = new Asset({
+
+		for (let i = 0; i < coinArray.length; i++) {
+			let code = coinArray[i];
+			coin[code] = await Coin.findOne({code: coinList[code].code});
+		}
+
+		coinArray.forEach(async (code) => {
+			asset[code] = new Asset({
 				user,
-				coin: coin[coinName],
-				quantity: coinList[coinName].initQuantity,
+				coin: coin[code],
+				quantity: coinList[code].initQuantity,
 			});
 		});
+
 		Object.keys(asset).forEach(async (elem) => await asset[elem].save());
 		return res.status(200).json({result: "Created!"});
 	}
