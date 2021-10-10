@@ -15,6 +15,5 @@ export const wallet = async function (req, res) {
 		});
 		wholeAsset[code] = assetInfo[code][0].quantity;
 	}
-
 	return wholeAsset;
 };
