@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node SERVER_coin_market/src/index",
-    "server": "node SERVER_coin_market/src/index"
+    "server": "node SERVER_coin_market/src/index",
+    "web":""
   },
   "repository": {
     "type": "git",
