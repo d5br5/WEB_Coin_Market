@@ -1,5 +1,5 @@
 import {Coin, Asset} from "../models/modelManager.js";
-import {getCoinPrice} from "../lib/price.js";
+import {getCoinPrice} from "./price.js";
 
 export const buildFoundation = async (req, all) => {
 	const {coin_name: order_coin} = req.params;
