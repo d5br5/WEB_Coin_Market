@@ -6,7 +6,7 @@ dotenv.config();
 
 const mongoDBLink = process.env.mongoDBLink;
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 mongoose
 	.connect(mongoDBLink, {useNewUrlParser: true, useUnifiedTopology: true})
