@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node SERVER_coin_market/src/index",
-    "start": "node SERVER_coin_market/src/index"
+    "server": "node SERVER_coin_market/src/index"
   },
   "repository": {
     "type": "git",
