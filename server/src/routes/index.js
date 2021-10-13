@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-	res.send("welcome to Coin World!");
+	return res.status(200).json({result: "Welcome to Coin World"});
 });
 
 export default router;
