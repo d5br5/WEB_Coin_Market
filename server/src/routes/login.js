@@ -23,4 +23,31 @@ router.post("/", async function (req, res) {
 	return res.status(200).json({publicKey, secretKey, token});
 });
 
+router.post("/key", async function (req, res) {
+	const {key} = req.body;
+	let decodedPK = "";
+	try {
+		decodedPK = jwt.decode(key).pub;
+	} catch (e) {
+		return res.status(400).json({ok: false, error: "invalid token"});
+	}
+
+	const psKey = await Key.findOne({publicKey: decodedPK});
+	try {
+		jwt.verify(key, psKey.secretKey, function (err, decoded) {
+			if (err || decoded.exp * 1000 < Date.now()) {
+				if (err) console.log("token error happend!");
+				throw e;
+			}
+		});
+	} catch (e) {
+		return res.status(400).send({ok: false, error: "token error"});
+	}
+
+	const user = await User.findOne({_id: psKey.user});
+	if (!user) return res.status(401).json({ok: false, error: "no such user"});
+
+	return res.status(200).json({ok: true});
+});
+
 export default router;
