@@ -1,7 +1,7 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import * as Routers from "./routes/routeManager.js";
-import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -21,6 +21,7 @@ app.use((req, res, next) => {
 	res.append("Access-Control-Allow-Headers", "Content-Type");
 	next();
 });
+app.use(cors());
 app.use("/", Routers.indexRouter);
 app.use("/create-coin", Routers.createCoinRouter);
 app.use("/register", Routers.registerRouter);

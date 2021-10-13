@@ -47,7 +47,7 @@ router.post("/key", async function (req, res) {
 	const user = await User.findOne({_id: psKey.user});
 	if (!user) return res.status(401).json({ok: false, error: "no such user"});
 
-	return res.status(200).json({ok: true});
+	return res.status(200).json({ok: true, data: user.name});
 });
 
 export default router;
