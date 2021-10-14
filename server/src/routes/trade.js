@@ -10,7 +10,8 @@ router.get("/", async (req, res) => {
 
 router.post("/buy/:coin_name", authentication, async (req, res) => {
 	const {ok, data} = await buildFoundation(req, false);
-	if (!ok) return res.status(404).json({errors: {coin: "no such coin.."}});
+	if (!ok)
+		return res.status(404).json({ok: false, error: {coin: "no such coin"}});
 
 	const {asset, assetInfo, orderPrice, orderQuantity, coinPrice} = data;
 	if (asset.usd > orderPrice) {
@@ -18,15 +19,18 @@ router.post("/buy/:coin_name", authentication, async (req, res) => {
 		assetInfo.usd.quantity = asset.usd - orderPrice;
 		await assetInfo.coin.save();
 		await assetInfo.usd.save();
-		return res.status(200).json({price: coinPrice, quantity: orderQuantity});
+		return res
+			.status(200)
+			.json({ok: true, data: {price: coinPrice, quantity: orderQuantity}});
 	} else {
-		return res.status(402).json({errors: {asset: "not enough usd"}});
+		return res.status(402).json({ok: false, error: {coin: "not enough usd"}});
 	}
 });
 
 router.post("/sell/:coin_name", authentication, async (req, res) => {
 	const {ok, data} = await buildFoundation(req, false);
-	if (!ok) return res.status(404).json({errors: {coin: "no such coin.."}});
+	if (!ok)
+		return res.status(404).json({ok: false, error: {coin: "no such coin"}});
 
 	const {asset, assetInfo, orderPrice, orderQuantity, coinPrice} = data;
 	if (asset.coin > orderQuantity) {
@@ -34,15 +38,18 @@ router.post("/sell/:coin_name", authentication, async (req, res) => {
 		assetInfo.usd.quantity = asset.usd + orderPrice;
 		await assetInfo.coin.save();
 		await assetInfo.usd.save();
-		return res.status(200).json({price: coinPrice, quantity: orderQuantity});
+		return res
+			.status(200)
+			.json({ok: true, data: {price: coinPrice, quantity: orderQuantity}});
 	} else {
-		return res.status(402).json({errors: {asset: "not enough coin"}});
+		return res.status(402).json({ok: false, error: {coin: "not enough coin"}});
 	}
 });
 
 router.post("/buy/:coin_name/all", authentication, async (req, res) => {
 	const {ok, data} = await buildFoundation(req, true);
-	if (!ok) return res.status(404).json({errors: {coin: "no such coin.."}});
+	if (!ok)
+		return res.status(404).json({ok: false, error: {coin: "no such coin"}});
 
 	const {asset, assetInfo, coinPrice, fullBuyPrice, fullBuyQuantity} = data;
 	if (fullBuyPrice > 0) {
@@ -50,15 +57,18 @@ router.post("/buy/:coin_name/all", authentication, async (req, res) => {
 		assetInfo.usd.quantity = 0;
 		await assetInfo.coin.save();
 		await assetInfo.usd.save();
-		return res.status(200).json({price: coinPrice, quantity: fullBuyQuantity});
+		return res
+			.status(200)
+			.json({ok: true, data: {price: coinPrice, quantity: fullBuyQuantity}});
 	} else {
-		return res.status(402).json({errors: {asset: "no usd"}});
+		return res.status(402).json({ok: false, error: {coin: "no usd"}});
 	}
 });
 
 router.post("/sell/:coin_name/all", authentication, async (req, res) => {
 	const {ok, data} = await buildFoundation(req, true);
-	if (!ok) return res.status(404).json({errors: {coin: "no such coin.."}});
+	if (!ok)
+		return res.status(404).json({ok: false, error: {coin: "no such coin"}});
 
 	const {asset, assetInfo, coinPrice, fullSellPrice, fullSellQuantity} = data;
 	if (fullSellPrice > 0) {
@@ -66,9 +76,11 @@ router.post("/sell/:coin_name/all", authentication, async (req, res) => {
 		assetInfo.usd.quantity = asset.usd + fullSellPrice;
 		await assetInfo.coin.save();
 		await assetInfo.usd.save();
-		return res.status(200).json({price: coinPrice, quantity: fullSellQuantity});
+		return res
+			.status(200)
+			.json({ok: true, data: {price: coinPrice, quantity: fullSellQuantity}});
 	} else {
-		return res.status(402).json({errors: {asset: "no usd"}});
+		return res.status(402).json({ok: false, error: {coin: "no usd"}});
 	}
 });
 

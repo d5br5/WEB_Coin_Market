@@ -5,7 +5,7 @@ import {authentication} from "../lib/authentication.js";
 const router = express.Router();
 router.get("/", authentication, async (req, res) => {
 	const assets = await wallet(req, res);
-	return res.status(200).json({assets});
+	return res.status(200).json({ok: true, data: {assets}});
 });
 
 export default router;
