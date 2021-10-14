@@ -1,5 +1,8 @@
+import React from "react";
+import CoinMarket from "./components/CoinMarket";
+
 function App() {
-	return <div className="App">dd</div>;
+	return <CoinMarket />;
 }
 
 export default App;
