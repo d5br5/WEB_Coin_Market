@@ -17,12 +17,13 @@ const getDefaultHeaders = () => {
     return defaultHeaders;
 };
 
-export const get = async (url = "", query = {}, extraHeaders = {}) => {
-    const res = await fetch(`${defaultURL}/${url}`, {
+export const get = async (url = "", extraHeaders = {}) => {
+    const data = await axios({
         method: "GET",
+        url: `${defaultURL}/${url}`,
         headers: {...getDefaultHeaders(), ...extraHeaders},
     });
-    return await res.json();
+    return data;
 };
 
 const post = async (url, body = {}, extraHeaders = {}) => {
@@ -49,6 +50,14 @@ export const signup = async (name, email, password) => {
 
 export const getAllPrice = async () => {
     return await get("coins")
+}
+
+export const getAsset = async (token) => {
+    return await get("assets", {Authorization: `Bearer ${token}`})
+}
+
+export const postTrade = async (coin, token, quantity, side) => {
+    return await post(`trade/${side}/${coin}`, {quantity}, {Authorization: `Bearer ${token}`});
 }
 
 

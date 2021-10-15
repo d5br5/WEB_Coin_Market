@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import {Button, colors, SELL, BUY} from "./Asset";
+import {Button, colors, SELL, BUY} from "../asset";
+import {postTrade} from "../../API";
+import {useForm} from "react-hook-form";
 
 const Container = styled.div`
   width: 700px;
@@ -83,7 +85,7 @@ const Title = styled.div`
   text-align: center;
   font-weight: 800;
   font-size: 30px;
-  
+
 `;
 
 const SideButton = styled(Button)`
@@ -93,9 +95,18 @@ const SideButton = styled(Button)`
   margin-right: 10px;
 `
 
+const Notice = styled.div`
+  margin-top: -30px;
+  height: 16px;
+  text-align: center;
+  color: red;
+`;
 
+const TradingTable = ({init, coins, isLoggedIn, side, setSide, token}) => {
 
-const TradingTable = ({init, coins, isLoggedIn, side, setSide}) => {
+    const {register, getValues, setValue} = useForm({mode:"onChange"});
+    const [trading, setTrading] = useState(false);
+    const [notice, setNotice] = useState("");
 
     const toggleSide = () => {
         if (side === SELL) {
@@ -104,6 +115,30 @@ const TradingTable = ({init, coins, isLoggedIn, side, setSide}) => {
             setSide(SELL);
         }
     }
+
+    const setAllZero = ()=>{
+        const data = getValues();
+        Object.keys(data).forEach(coin=>setValue(coin,""));
+    }
+
+    const orderPost = async (code) => {
+        const data = getValues();
+        const quantity = parseInt(data[`${code} quantity`]);
+        if(quantity>0){
+            setTrading(true);
+            setNotice("processing...");
+            const postData = await postTrade(code, token, quantity, side.toLowerCase());
+            setTrading(false);
+            setNotice("Done!");
+            setAllZero();
+        }
+    }
+
+    const orderAllPost = async(code) =>{
+
+    }
+
+
 
     return (
         <Container>
@@ -116,6 +151,7 @@ const TradingTable = ({init, coins, isLoggedIn, side, setSide}) => {
                                 bgColor={colors.sell}/>
                 </OrderContainer>
             </TitleContainer>
+            <Notice>{notice!=="" && notice}</Notice>
             <CoinSet>
                 <TitleName>Coin</TitleName>
                 <TitlePrice>Price($)</TitlePrice>
@@ -126,11 +162,14 @@ const TradingTable = ({init, coins, isLoggedIn, side, setSide}) => {
                 coins.map((coin, index) => <CoinSet key={index}>
                     <CoinName>{coin.code}</CoinName>
                     <CoinPrice>{coin.price}</CoinPrice>
-                    <QuantityInput placeholder={isLoggedIn ? "quantity" : ""} disabled={!isLoggedIn}/>
+                    <QuantityInput placeholder={isLoggedIn ? "quantity" : ""}
+                                   {...register(`${coin.code} quantity`)}
+                                   disabled={!isLoggedIn}/>
                     <OrderContainer>
-                        <PostTrade type="submit" value={side} disabled={!isLoggedIn}
+                        <PostTrade type="button" value={side} disabled={!isLoggedIn}
+                                   onClick={() => orderPost(`${coin.code}`, side)}
                                    bgColor={side === BUY ? colors.buy : colors.sell}/>
-                        <PostTrade type="submit" value={side + " ALL"} disabled={!isLoggedIn}
+                        <PostTrade type="button" value={`${side} ALL`} disabled={!isLoggedIn}
                                    bgColor={side === BUY ? colors.buy : colors.sell}/>
                     </OrderContainer>
                 </CoinSet>)

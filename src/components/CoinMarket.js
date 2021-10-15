@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {getAllPrice} from "../API";
-import {SELL, SIGNIN} from "./Asset";
-import TradingTable from "./TradingTable";
-import Account from "./Account";
+import {SELL, SIGNIN} from "./asset";
+import TradingTable from "./table/TradingTable";
+import Account from "./account/Account";
 
 const Container = styled.div`
   width: 1200px;
@@ -22,15 +22,18 @@ const CoinMarket = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loginProcess, setLoginProcess] = useState(SIGNIN);
     const [user, setUser] = useState("");
+    const [asset, setAsset] = useState({});
+    const [token, setToken] = useState("");
 
     useEffect(() => {
         async function getPrices() {
-            const data = await getAllPrice();
+            const {data} = await getAllPrice();
+            console.log(data);
             if (data.ok) {
                 setCoins(data.data);
                 setInit(true)
             } else {
-                setCoins([]);
+                setCoins({});
                 setInit(true);
             }
         }
@@ -41,14 +44,17 @@ const CoinMarket = () => {
     return (
         <Container>
             <TradingTable init={init} coins={coins}
-                          isLoggedIn={isLoggedIn}
-                          side={side} setSide={setSide}/>
+                          isLoggedIn={isLoggedIn} token={token}
+                          side={side} setSide={setSide} asset={asset}/>
             <Account loginProcess={loginProcess}
                      setLoginProcess={setLoginProcess}
                      setIsLoggedIn={setIsLoggedIn}
                      user={user}
                      setUser={setUser}
-                     isLoggedIn={isLoggedIn}/>
+                     isLoggedIn={isLoggedIn}
+                     asset={asset}
+                     setToken={setToken}
+                     setAsset={setAsset}/>
         </Container>
     );
 };
