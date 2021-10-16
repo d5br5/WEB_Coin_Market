@@ -11,7 +11,7 @@ router.post("/", async function (req, res) {
 	const {email, password} = req.body;
 	const user = await User.findOne({email, password: encryptPassword(password)});
 	if (!user) {
-		return res.status(404).json({ok: false, error: {user: "No such User"}});
+		return res.status(200).json({ok: false, error: {user: "No such User"}});
 	}
 
 	const publicKey = crypto.randomBytes(64).toString("hex");
@@ -20,7 +20,7 @@ router.post("/", async function (req, res) {
 	await psKey.save();
 
 	const token = jwt.sign({pub: publicKey}, secretKey, {expiresIn: 60 * 60});
-	return res.status(200).json({ok: true, data: {publicKey, secretKey, token}});
+	return res.status(200).json({ok: true, data: {publicKey, secretKey, token, user:user.name}});
 });
 
 router.post("/key", async function (req, res) {
@@ -29,7 +29,7 @@ router.post("/key", async function (req, res) {
 	try {
 		decodedPK = jwt.decode(key).pub;
 	} catch (e) {
-		return res.status(400).json({ok: false, error: {token: "invalid token"}});
+		return res.status(200).json({ok: false, error: {token: "invalid token"}});
 	}
 
 	const psKey = await Key.findOne({publicKey: decodedPK});
@@ -41,12 +41,12 @@ router.post("/key", async function (req, res) {
 			}
 		});
 	} catch (e) {
-		return res.status(400).send({ok: false, error: {token: "token error"}});
+		return res.status(200).send({ok: false, error: {token: "token error"}});
 	}
 
 	const user = await User.findOne({_id: psKey.user});
 	if (!user)
-		return res.status(401).json({ok: false, error: {user: "no such user"}});
+		return res.status(200).json({ok: false, error: {user: "no such user"}});
 
 	return res.status(200).json({ok: true, data: {user: user.name}});
 });

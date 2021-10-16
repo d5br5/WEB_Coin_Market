@@ -8,20 +8,20 @@ const router = express.Router();
 router.post(
 	"/",
 	[
-		body("name").isAlphanumeric().isLength({min: 4, max: 12}),
+		body("name").isLength({min: 2, max: 12}),
 		body("email").isEmail().isLength({max: 30}),
 		body("password").isLength({min: 8, max: 16}),
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ok: false, error: errors.array()});
+			return res.status(200).json({ok: false, error: {...errors.array()[0]}});
 		}
 		const {email, name, password} = req.body;
 		if (await User.findOne({email})) {
 			return res
-				.status(400)
-				.json({ok: false, error: {email: "Already registered"}});
+				.status(200)
+				.json({ok: false, error: {param:"email", msg: "already registered"}});
 		}
 
 		const encryptedPassword = encryptPassword(password);
@@ -37,15 +37,17 @@ router.post(
 			coin[code] = await Coin.findOne({code: coinList[code].code});
 		}
 
-		coinArray.forEach(async (code) => {
+		for (const code of coinArray) {
 			asset[code] = new Asset({
 				user,
 				coin: coin[code],
 				quantity: coinList[code].initQuantity,
 			});
-		});
+		}
 
-		Object.keys(asset).forEach(async (elem) => await asset[elem].save());
+		for (const elem of Object.keys(asset)) {
+			await asset[elem].save();
+		}
 		return res.status(200).json({ok: true, data: {result: "Created!"}});
 	}
 );

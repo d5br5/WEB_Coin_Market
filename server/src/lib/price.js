@@ -19,9 +19,9 @@ export const getAllCoinPrices = async () => {
 		ids: coinIds,
 		vs_currencies: ["usd"],
 	});
-	const prices = {};
+	const prices = [];
 	coinCodes.forEach((code) => {
-		prices[code] = document.data[coinIdCode[code]]["usd"];
+		prices.push({code, price: document.data[coinIdCode[code]]["usd"]});
 	});
 	return prices;
 };

@@ -14,7 +14,7 @@ router.get("/:coin_name", async (req, res) => {
 	} = req;
 	const price = await getCoinPrice(coin_name);
 	if (price === null)
-		return res.status(404).json({ok: false, error: {coin: "No Such Coin"}});
+		return res.status(200).json({ok: false, error: {coin: "No Such Coin"}});
 	return res.status(200).json({ok: true, data: price});
 });
 

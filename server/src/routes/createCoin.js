@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
 
 	if (await Coin.findOne({code})) {
 		return res
-			.status(400)
+			.status(200)
 			.json({ok: false, error: {code: "Code Already existed"}});
 	}
 
