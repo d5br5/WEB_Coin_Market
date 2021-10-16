@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import LoginForm, {AccountButton} from "./LoginForm";
-import {useForm} from "react-hook-form";
-import {Button, LOGIN_KEY, SIGNUP} from "../asset";
+import LoginForm from "./LoginForm";
+import {Button, LOGIN_KEY} from "../asset";
 
 const Container = styled.div`
   width: 400px;

@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {getAllPrice, getAsset, login, loginByKey} from "../API";
+import {getAllPrice, getAsset, loginByKey} from "../API";
 import {LOGIN_KEY, SELL, SIGNIN} from "./asset";
 import TradingTable from "./table/TradingTable";
 import Account from "./account/Account";
 import Title from "./Title";
 
 const FullFrame = styled.div`
-  padding-top: 200px;
+  padding-top: 90px;
 `
 
 const Container = styled.div`
