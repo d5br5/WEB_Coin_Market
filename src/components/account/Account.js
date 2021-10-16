@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import LoginForm from "./LoginForm";
+import LoginForm, {AccountButton} from "./LoginForm";
 import {useForm} from "react-hook-form";
+import {Button, LOGIN_KEY, SIGNUP} from "../asset";
 
 const Container = styled.div`
   width: 400px;
-  border: 1px solid black;
+  border: 1px solid white;
 `
 
 const Notice = styled.div`
@@ -41,7 +42,7 @@ const AssetContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 50%;
-  margin: 20px auto;
+  margin: 0px auto 20px;
 `;
 
 const Asset = styled.div`
@@ -63,9 +64,27 @@ const AssetQuantity = styled.div`
   width: 60%;
 `
 
+const LogOutButton = styled(Button)`
+  margin: 10px auto 30px;
+  width: 40%;
+  background-color: ${props => props.bgColor};
+  opacity: ${props => props.transparent ? 0.5 : 1};
+`
 
 
-const Account = ({loginProcess, setLoginProcess, isLoggedIn, setIsLoggedIn, user, setUser, setAsset, asset, setToken}) => {
+const Account = ({
+                     loginProcess,
+                     setLoginProcess,
+                     isLoggedIn,
+                     setIsLoggedIn,
+                     user,
+                     setUser,
+                     setAsset,
+                     asset,
+                     setToken,
+                     assetLoading,
+                     setAssetLoading
+                 }) => {
 
     const [notice, setNotice] = useState(" ");
 
@@ -75,19 +94,32 @@ const Account = ({loginProcess, setLoginProcess, isLoggedIn, setIsLoggedIn, user
         {isLoggedIn ?
             <LoggedInForm>
                 <Welcome>Hello, {user}</Welcome>
+                <LogOutButton type={"submit"}
+                              value={"Log Out"}
+                              bgColor={"red"} transparent={assetLoading}
+                              disabled={assetLoading}
+                              onClick={() => {
+                                  localStorage.removeItem(LOGIN_KEY);
+                                  setToken("");
+                                  setIsLoggedIn(false);
+                                  setUser("");
+                                  setAsset({});
+                              }}/>
                 <Welcome>Your Assets</Welcome>
-                <AssetContainer>
-                    {Object.keys(asset).map((coin, index) => <Asset key={index}>
-                        <AssetName>{coin}</AssetName>
-                        <AssetQuantity>{asset[coin]}</AssetQuantity>
-                    </Asset>)}
-                </AssetContainer>
+                {assetLoading ? <Notice> Now Asset is Loading,,,</Notice> :
+                    <AssetContainer>
+                        {Object.keys(asset).map((coin, index) => <Asset key={index}>
+                            <AssetName>{coin}</AssetName>
+                            <AssetQuantity>{asset[coin]}</AssetQuantity>
+                        </Asset>)}
+                    </AssetContainer>}
             </LoggedInForm>
             :
             <LoginForm setIsLoggedIn={setIsLoggedIn}
                        setUser={setUser} setNotice={setNotice}
                        loginProcess={loginProcess} setToken={setToken}
-                       setLoginProcess={setLoginProcess} setAsset={setAsset}/>}
+                       setLoginProcess={setLoginProcess} setAsset={setAsset}
+                       setAssetLoading={setAssetLoading}/>}
 
     </Container>
 }

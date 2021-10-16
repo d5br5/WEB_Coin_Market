@@ -10,7 +10,7 @@ const Container = styled.form`
 
 const ButtonContainer = styled.div`
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -46,12 +46,27 @@ const AccountButton = styled(Button)`
   opacity: ${props => props.transparent ? 0.5 : 1};
 `
 
-const LoginForm = ({loginProcess, setLoginProcess, setIsLoggedIn, setNotice, setUser, setAsset, setToken}) => {
+const LoginNotice = styled.div`
+  text-align: center;
+  margin-top: 20px;
+`;
+
+const LoginForm = ({
+                       loginProcess,
+                       setLoginProcess,
+                       setIsLoggedIn,
+                       setNotice,
+                       setUser,
+                       setAsset,
+                       setToken,
+                       setAssetLoading
+                   }) => {
 
     const {register, setValue, getValues} = useForm({mode: "onChange"});
 
     const onLoginClick = async (e) => {
         e.preventDefault();
+        setNotice("Login Processing...")
         const {email, password} = getValues();
         const {data} = await login(email, password);
         if (data.ok) {
@@ -62,16 +77,20 @@ const LoginForm = ({loginProcess, setLoginProcess, setIsLoggedIn, setNotice, set
             setToken(token);
             setIsLoggedIn(true);
             setUser(data.data.user);
+            setAssetLoading(false);
+            setNotice("");
         } else {
             setNotice("Login failed. Try again");
             localStorage.removeItem(LOGIN_KEY);
             setIsLoggedIn(false);
             setUser(null);
         }
+
     }
 
     const onRegisterClick = async (e) => {
         e.preventDefault();
+        setNotice("Register Processing..");
         const {name, email, password} = getValues();
         const {data} = await signup(name, email, password);
         if (data.ok) {
@@ -136,6 +155,8 @@ const LoginForm = ({loginProcess, setLoginProcess, setIsLoggedIn, setNotice, set
                                setLoginProcess(SIGNUP)
                            }}/>
         </ButtonContainer>
+        <LoginNotice>Length of name should be 2~12</LoginNotice>
+        <LoginNotice>Length of password should be 9~16</LoginNotice>
     </Container>
 
 

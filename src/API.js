@@ -57,7 +57,9 @@ export const getAsset = async (token) => {
 }
 
 export const postTrade = async (coin, token, quantity, side) => {
-    return await post(`trade/${side}/${coin}`, {quantity}, {Authorization: `Bearer ${token}`});
+    return await post(`trade/${side.toLowerCase()}/${coin}`, {quantity}, {Authorization: `Bearer ${token}`});
 }
 
-
+export const postTradeAll = async (coin, token, side) => {
+    return await post(`trade/${side.toLowerCase()}/${coin}/all`, {Authorization: `Bearer ${token}`});
+}

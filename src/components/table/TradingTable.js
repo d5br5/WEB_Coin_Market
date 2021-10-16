@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {Button, colors, SELL, BUY} from "../asset";
-import {postTrade} from "../../API";
+import {getAllPrice, postTrade, postTradeAll} from "../../API";
 import {useForm} from "react-hook-form";
 
 const Container = styled.div`
   width: 700px;
-  border: 1px solid black;
+  border: 1px solid white;
 `;
 
 const CoinSet = styled.form`
@@ -102,11 +102,33 @@ const Notice = styled.div`
   color: red;
 `;
 
-const TradingTable = ({init, coins, isLoggedIn, side, setSide, token}) => {
+const RefreshContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  text-align: right;
+  width: 100%;
+  justify-content: right;
+`
 
-    const {register, getValues, setValue} = useForm({mode:"onChange"});
+const RefreshNotice = styled.div`
+    line-height: 30px;
+  margin-right: 20px;
+`;
+
+const RefreshButton = styled.input`
+  border: none;
+  border-radius: 3px;
+  background-color: black;
+  font-size: 20px;
+  margin-right: 20px;
+`;
+
+const TradingTable = ({init, coins, isLoggedIn, side, setSide, token, asset, setAsset, setCoins}) => {
+
+    const {register, getValues, setValue} = useForm({mode: "onChange"});
     const [trading, setTrading] = useState(false);
     const [notice, setNotice] = useState("");
+    const [refreshNotice, setRefreshNotice] = useState("");
 
     const toggleSide = () => {
         if (side === SELL) {
@@ -116,26 +138,74 @@ const TradingTable = ({init, coins, isLoggedIn, side, setSide, token}) => {
         }
     }
 
-    const setAllZero = ()=>{
+    const refresh = async () => {
+        setRefreshNotice("Refreshing...");
+        const {data} = await getAllPrice();
+        if (data.ok) {
+
+            setCoins(data.data);
+        } else {
+            setCoins({});
+        }
+        setRefreshNotice("Refreshed!!");
+    }
+
+    const setAllZero = () => {
         const data = getValues();
-        Object.keys(data).forEach(coin=>setValue(coin,""));
+        Object.keys(data).forEach(coin => setValue(coin, ""));
     }
 
     const orderPost = async (code) => {
         const data = getValues();
         const quantity = parseInt(data[`${code} quantity`]);
-        if(quantity>0){
-            setTrading(true);
-            setNotice("processing...");
-            const postData = await postTrade(code, token, quantity, side.toLowerCase());
-            setTrading(false);
-            setNotice("Done!");
+        setTrading(true);
+        setNotice("processing...");
+        if (quantity > 0) {
+            const postData = await postTrade(code, token, quantity, side);
+            if (postData.data.ok) {
+                const {data: {data: {price}}} = postData;
+                const modifiedAsset = {...asset};
+                if (side === SELL) {
+                    modifiedAsset[code] -= quantity;
+                    setAsset({...modifiedAsset, usd: asset.usd + price * quantity});
+                } else {
+                    modifiedAsset[code] += quantity;
+                    setAsset({...modifiedAsset, usd: asset.usd - price * quantity});
+                }
+                setNotice("Done!");
+            } else {
+                const errors = Object.keys(postData.data.error)
+                setNotice(postData.data.error[errors[0]]);
+            }
             setAllZero();
+        } else {
+            setNotice("quantity must be bigger than 0");
         }
+        setTrading(false);
     }
 
-    const orderAllPost = async(code) =>{
-
+    const orderAllPost = async (code) => {
+        setTrading(true);
+        setNotice("processing...");
+        const {data} = await postTradeAll(code, token, side);
+        console.log(data);
+        const modifiedAsset = {...asset};
+        if (data.ok) {
+            const {price, quantity} = data.data;
+            if (side === SELL) {
+                modifiedAsset[code] = 0;
+                modifiedAsset['usd'] += price * quantity;
+            } else {
+                modifiedAsset['usd'] = 0;
+                modifiedAsset[code] += quantity;
+            }
+            setAsset(modifiedAsset);
+            setNotice("Done!");
+        } else {
+            const errors = Object.keys(data.error);
+            setNotice(data.error[errors[0]]);
+        }
+        setTrading(false);
     }
 
 
@@ -151,7 +221,7 @@ const TradingTable = ({init, coins, isLoggedIn, side, setSide, token}) => {
                                 bgColor={colors.sell}/>
                 </OrderContainer>
             </TitleContainer>
-            <Notice>{notice!=="" && notice}</Notice>
+            <Notice>{notice !== "" && notice}</Notice>
             <CoinSet>
                 <TitleName>Coin</TitleName>
                 <TitlePrice>Price($)</TitlePrice>
@@ -166,16 +236,24 @@ const TradingTable = ({init, coins, isLoggedIn, side, setSide, token}) => {
                                    {...register(`${coin.code} quantity`)}
                                    disabled={!isLoggedIn}/>
                     <OrderContainer>
-                        <PostTrade type="button" value={side} disabled={!isLoggedIn}
-                                   onClick={() => orderPost(`${coin.code}`, side)}
+                        <PostTrade type="button" value={side} disabled={!isLoggedIn || trading}
+                                   onClick={() => orderPost(`${coin.code}`)}
                                    bgColor={side === BUY ? colors.buy : colors.sell}/>
-                        <PostTrade type="button" value={`${side} ALL`} disabled={!isLoggedIn}
+                        <PostTrade type="button" value={`${side} ALL`} disabled={!isLoggedIn || trading}
+                                   onClick={() => orderAllPost(`${coin.code}`)}
                                    bgColor={side === BUY ? colors.buy : colors.sell}/>
                     </OrderContainer>
                 </CoinSet>)
             ) : (
                 <Loading>Loading,,</Loading>
             )}
+            <RefreshContainer>
+                <RefreshNotice>{refreshNotice}</RefreshNotice>
+                <RefreshButton type={"button"} value={"🔄"} onClick={refresh}/>
+            </RefreshContainer>
+            <RefreshContainer>
+                <RefreshNotice>The price of coin from API doesn't change frequently. It's not a problem. Sorry.</RefreshNotice>
+            </RefreshContainer>
         </Container>
     )
 
