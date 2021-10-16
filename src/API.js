@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// const defaultURL = "https://coin-market-d5br5.herokuapp.com";
-const defaultURL = "http://localhost:4000";
+const defaultURL = "https://coin-market-d5br5.herokuapp.com";
+// const defaultURL = "http://localhost:4000";
 const LOGIN_KEY = "LOGIN_KEY";
 
 const getDefaultHeaders = () => {
