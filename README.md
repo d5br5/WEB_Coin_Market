@@ -4,8 +4,8 @@
 
 ## 구현 완료
 
-server : https://coin-market-d5br5.herokuapp.com/
-web : In progress
+- server : https://coin-market-d5br5.herokuapp.com/
+- web : In progress
 
 #### 구현 코인 목록
 
