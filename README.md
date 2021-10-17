@@ -5,7 +5,7 @@
 ## 구현 완료
 
 - server : https://coin-market-d5br5.herokuapp.com/
-- web : In progress
+- web : https://coin-to-the-moon.vercel.app/
 
 #### 구현 코인 목록
 
