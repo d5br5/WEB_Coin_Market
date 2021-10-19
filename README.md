@@ -10,12 +10,12 @@
 #### 구현 코인 목록
 
 - usd
-- btc : bitcoin
-- bch : bitcoin-cash
-- xrp : ripple
-- eos : eos
-- eth : ethereum
-- trx : tron
+- btc : Bitcoin
+- bch : Bitcoin-cash
+- xrp : Ripple
+- eos : Eos
+- eth : Ethereum
+- trx : Tron
 
 ## 가격조회
 
