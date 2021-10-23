@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {getAllPrice, getAsset, loginByKey} from "../API";
-import {LOGIN_KEY, SELL, SIGNIN} from "./asset";
+import {LOGIN_KEY, BUY, SIGNIN} from "./asset";
 import TradingTable from "./table/TradingTable";
 import Account from "./account/Account";
 import Title from "./Title";
@@ -23,7 +23,7 @@ const CoinMarket = () => {
 
     const [init, setInit] = useState(false);
     const [coins, setCoins] = useState({});
-    const [side, setSide] = useState(SELL);
+    const [side, setSide] = useState(BUY);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loginProcess, setLoginProcess] = useState(SIGNIN);
     const [user, setUser] = useState("");
