@@ -1,20 +1,19 @@
 import styled from "styled-components";
 
 const Button = styled.input`
-  border: none;
-  border-radius: 3px;
-  background-color: ${props => props.bgColor};
-  color: white;
-  text-align: center;
-  padding: 8px 0;
-  font-weight: 600;
-  
-`
+	border: none;
+	border-radius: 3px;
+	background-color: ${(props) => props.bgColor};
+	color: white;
+	text-align: center;
+	padding: 8px 0;
+	font-weight: 600;
+`;
 
 const colors = {
-    buy: "dodgerblue",
-    sell: "tomato"
-}
+	buy: "dodgerblue",
+	sell: "tomato",
+};
 
 export const LOGIN_KEY = "LOGIN_KEY";
 export const BUY = "BUY";
