@@ -1,23 +1,10 @@
 import React, {useState, useEffect} from "react";
-import styled from "styled-components";
 import Title from "./Title";
-import {LOGIN_KEY, BUY, SIGNIN} from "../asset";
-import {getAllPrice, getAsset, loginByKey} from "../API";
+import {LOGIN_KEY, BUY, SIGNIN} from "../modules/asset";
+import {getAllPrice, getAsset, loginByKey} from "../modules/API";
 import TradingTable from "./table/TradingTable";
 import Account from "./account/Account";
-
-const FullFrame = styled.div`
-	padding-top: 90px;
-`;
-
-const Container = styled.div`
-	width: 1200px;
-	height: 600px;
-	margin: 10px auto;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-`;
+import {Container, FullFrame} from "./CoinMarketStyle";
 
 type Coin = {code: string; price: number};
 type Asset = {[key: string]: number};

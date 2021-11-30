@@ -1,54 +1,17 @@
 import React from "react";
-import styled from "styled-components";
-import {Button, LOGIN_KEY, SIGNIN, SIGNUP} from "../../asset";
+import {LOGIN_KEY, SIGNIN, SIGNUP} from "../../modules/asset";
 import {useForm} from "react-hook-form";
-import {login, signup, getAsset} from "../../API";
-
-const Container = styled.form``;
-
-const ButtonContainer = styled.div`
-	width: 90%;
-	margin: 0 auto 30px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-`;
-
-const InputContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 160px;
-`;
-
-const AccountInput = styled.input`
-	height: 30px;
-	width: 100%;
-	margin: 5px;
-`;
-
-const InputInfo = styled.div`
-	width: 100px;
-`;
-const InputItem = styled.div`
-	display: flex;
-	flex-direction: row;
-	width: 90%;
-	align-items: center;
-	margin: 0 auto;
-`;
-
-const AccountButton = styled(Button)<{transparent: boolean}>`
-	margin: 10px auto 30px;
-	width: 40%;
-	background-color: ${(props) => props.bgColor};
-	opacity: ${(props) => (props.transparent ? 0.5 : 1)};
-`;
-
-const LoginNotice = styled.div`
-	text-align: center;
-	margin-top: 20px;
-`;
+import {login, signup, getAsset} from "../../modules/API";
+import {
+	AccountButton,
+	AccountInput,
+	ButtonContainer,
+	Container,
+	InputContainer,
+	InputInfo,
+	InputItem,
+	LoginNotice,
+} from "./LoginFormStyle";
 
 type Asset = {[key: string]: number};
 

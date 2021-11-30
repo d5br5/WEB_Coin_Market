@@ -1,6 +1,6 @@
 import React from "react";
 import CoinMarket from "./components/CoinMarket";
-import {GlobalStyles} from "./globalStyles";
+import {GlobalStyles} from "./modules/globalStyles";
 
 function App() {
 	return (
