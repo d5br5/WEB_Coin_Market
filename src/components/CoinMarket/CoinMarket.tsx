@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from "react";
-import Title from "./Title";
-import {LOGIN_KEY, BUY, SIGNIN} from "../modules/asset";
-import {getAllPrice, getAsset, loginByKey} from "../modules/API";
-import TradingTable from "./table/TradingTable";
-import Account from "./account/Account";
+import Title from "../Title";
+import {LOGIN_KEY, BUY, SIGNIN} from "../../modules/constants";
+import {getAllPrice, getAsset, loginByKey} from "../../modules/API";
+import TradingTable from "../TradingTable/TradingTable";
+import Account from "../Account/Account";
 import {Container, FullFrame} from "./CoinMarketStyle";
-
-type Coin = {code: string; price: number};
-type Asset = {[key: string]: number};
 
 const CoinMarket = () => {
 	const [init, setInit] = useState<boolean>(false);

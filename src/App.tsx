@@ -1,5 +1,4 @@
-import React from "react";
-import CoinMarket from "./components/CoinMarket";
+import CoinMarket from "./components/CoinMarket/CoinMarket";
 import {GlobalStyles} from "./modules/globalStyles";
 
 function App() {

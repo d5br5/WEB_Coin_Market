@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const defaultURL: string = "https://coin-market-d5br5.herokuapp.com";
-// const defaultURL = "http://localhost:4000";
 const LOGIN_KEY: string = "LOGIN_KEY";
 
 interface defaultHeadersType {

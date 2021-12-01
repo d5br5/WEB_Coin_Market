@@ -1,20 +1,7 @@
 import React, {useState} from "react";
-import LoginForm from "./LoginForm";
-import {LOGIN_KEY} from "../../modules/asset";
-import {
-	Container,
-	AccountTitle,
-	Asset,
-	AssetContainer,
-	AssetName,
-	AssetQuantity,
-	LogOutButton,
-	LoggedInForm,
-	Notice,
-	Welcome,
-} from "./AccountStyle";
-
-type AssetType = {[key: string]: number};
+import LoginForm from "../LoginForm/LoginForm";
+import {LOGIN_KEY} from "../../modules/constants";
+import * as A from "./AccountStyle";
 
 interface IProps {
 	loginProcess: string;
@@ -23,8 +10,8 @@ interface IProps {
 	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 	user: string;
 	setUser: React.Dispatch<React.SetStateAction<string>>;
-	asset: AssetType;
-	setAsset: React.Dispatch<React.SetStateAction<AssetType>>;
+	asset: Asset;
+	setAsset: React.Dispatch<React.SetStateAction<Asset>>;
 	setToken: React.Dispatch<React.SetStateAction<string>>;
 	assetLoading: boolean;
 	setAssetLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,13 +33,13 @@ const Account = ({
 	const [notice, setNotice] = useState<string>(" ");
 
 	return (
-		<Container>
-			<AccountTitle>Account</AccountTitle>
-			<Notice>{notice}</Notice>
+		<A.Container>
+			<A.AccountTitle>Account</A.AccountTitle>
+			<A.Notice>{notice}</A.Notice>
 			{isLoggedIn ? (
-				<LoggedInForm>
-					<Welcome>Hello, {user}</Welcome>
-					<LogOutButton
+				<A.LoggedInForm>
+					<A.Welcome>Hello, {user}</A.Welcome>
+					<A.LogOutButton
 						type={"submit"}
 						value={"Log Out"}
 						bgColor={"red"}
@@ -66,20 +53,20 @@ const Account = ({
 							setAsset({});
 						}}
 					/>
-					<Welcome>Your Assets</Welcome>
+					<A.Welcome>Your Assets</A.Welcome>
 					{assetLoading ? (
-						<Notice> Now Asset is Loading,,,</Notice>
+						<A.Notice> Now Asset is Loading,,,</A.Notice>
 					) : (
-						<AssetContainer>
+						<A.AssetContainer>
 							{Object.keys(asset).map((coin, index) => (
-								<Asset key={index}>
-									<AssetName>{coin}</AssetName>
-									<AssetQuantity>{asset[coin]}</AssetQuantity>
-								</Asset>
+								<A.Asset key={index}>
+									<A.AssetName>{coin}</A.AssetName>
+									<A.AssetQuantity>{asset[coin]}</A.AssetQuantity>
+								</A.Asset>
 							))}
-						</AssetContainer>
+						</A.AssetContainer>
 					)}
-				</LoggedInForm>
+				</A.LoggedInForm>
 			) : (
 				<LoginForm
 					setIsLoggedIn={setIsLoggedIn}
@@ -92,7 +79,7 @@ const Account = ({
 					setAssetLoading={setAssetLoading}
 				/>
 			)}
-		</Container>
+		</A.Container>
 	);
 };
 

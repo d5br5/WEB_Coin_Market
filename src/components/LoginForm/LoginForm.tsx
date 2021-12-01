@@ -1,19 +1,8 @@
 import React from "react";
-import {LOGIN_KEY, SIGNIN, SIGNUP} from "../../modules/asset";
+import {LOGIN_KEY, SIGNIN, SIGNUP} from "../../modules/constants";
 import {useForm} from "react-hook-form";
 import {login, signup, getAsset} from "../../modules/API";
-import {
-	AccountButton,
-	AccountInput,
-	ButtonContainer,
-	Container,
-	InputContainer,
-	InputInfo,
-	InputItem,
-	LoginNotice,
-} from "./LoginFormStyle";
-
-type Asset = {[key: string]: number};
+import * as L from "./LoginFormStyle";
 
 interface IProps {
 	loginProcess: string;
@@ -90,12 +79,12 @@ const LoginForm = ({
 	};
 
 	return (
-		<Container>
-			<InputContainer>
+		<L.Container>
+			<L.InputContainer>
 				{loginProcess === SIGNUP && (
-					<InputItem>
-						<InputInfo>Name</InputInfo>
-						<AccountInput
+					<L.InputItem>
+						<L.InputInfo>Name</L.InputInfo>
+						<L.AccountInput
 							placeholder="name"
 							type="text"
 							onFocus={() => setNotice("")}
@@ -105,11 +94,11 @@ const LoginForm = ({
 								minLength: {value: 2, message: "Name must be longer than 2"},
 							})}
 						/>
-					</InputItem>
+					</L.InputItem>
 				)}
-				<InputItem>
-					<InputInfo>Email</InputInfo>
-					<AccountInput
+				<L.InputItem>
+					<L.InputInfo>Email</L.InputInfo>
+					<L.AccountInput
 						placeholder="email"
 						type="text"
 						autoComplete={"email"}
@@ -119,10 +108,10 @@ const LoginForm = ({
 							minLength: {value: 10, message: "E-mail must be longer than 10"},
 						})}
 					/>
-				</InputItem>
-				<InputItem>
-					<InputInfo>Password</InputInfo>
-					<AccountInput
+				</L.InputItem>
+				<L.InputItem>
+					<L.InputInfo>Password</L.InputInfo>
+					<L.AccountInput
 						placeholder="password"
 						type="password"
 						autoComplete={"current-password"}
@@ -132,10 +121,10 @@ const LoginForm = ({
 							minLength: {value: 6, message: "Password must be longer than 6"},
 						})}
 					/>
-				</InputItem>
-			</InputContainer>
-			<ButtonContainer>
-				<AccountButton
+				</L.InputItem>
+			</L.InputContainer>
+			<L.ButtonContainer>
+				<L.AccountButton
 					value={loginProcess === SIGNIN ? "Sign In" : "Go Sign In"}
 					type={"submit"}
 					bgColor={"blue"}
@@ -150,7 +139,7 @@ const LoginForm = ({
 					}
 				/>
 
-				<AccountButton
+				<L.AccountButton
 					value={loginProcess === SIGNUP ? "Sign Up" : "Go Sign Up"}
 					type={"submit"}
 					bgColor={"blue"}
@@ -164,10 +153,10 @@ const LoginForm = ({
 							  }
 					}
 				/>
-			</ButtonContainer>
-			<LoginNotice>Length of name should be 2~12</LoginNotice>
-			<LoginNotice>Length of password should be 9~16</LoginNotice>
-		</Container>
+			</L.ButtonContainer>
+			<L.LoginNotice>Length of name should be 2~12</L.LoginNotice>
+			<L.LoginNotice>Length of password should be 9~16</L.LoginNotice>
+		</L.Container>
 	);
 };
 export default LoginForm;

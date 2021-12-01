@@ -1,35 +1,9 @@
 import React, {useState} from "react";
-import {colors, SELL, BUY} from "../../modules/asset";
+import {SELL, BUY} from "../../modules/constants";
+import {colors} from "../../modules/styleAsset";
 import {getAllPrice, postTrade, postTradeAll} from "../../modules/API";
 import {useForm} from "react-hook-form";
-import {
-	CoinName,
-	CoinPrice,
-	CoinSet,
-	Container,
-	Loading,
-	Notice,
-	OrderContainer,
-	PostTrade,
-	QuantityInput,
-	RefreshButton,
-	RefreshContainer,
-	RefreshNotice,
-	SideButton,
-	TableTitle,
-	Title,
-	TitleButton,
-	TitleContainer,
-	TitleName,
-	TitlePrice,
-	TitleQuantity,
-} from "./TradingTableStyle";
-
-type Asset = {
-	[key: string]: number;
-};
-
-type Coin = {code: string; price: number};
+import * as T from "./TradingTableStyle";
 
 interface Iprops {
 	init: boolean;
@@ -141,75 +115,75 @@ const TradingTable = ({
 	};
 
 	return (
-		<Container>
-			<TitleContainer>
-				<Title>Coin Table</Title>
-				<OrderContainer>
-					<SideButton
+		<T.Container>
+			<T.TitleContainer>
+				<T.Title>Coin Table</T.Title>
+				<T.OrderContainer>
+					<T.SideButton
 						value={BUY}
 						type={"button"}
 						disabled={side === BUY}
 						onClick={toggleSide}
 						bgColor={colors.buy}
 					/>
-					<SideButton
+					<T.SideButton
 						value={SELL}
 						type={"button"}
 						disabled={side === SELL}
 						onClick={toggleSide}
 						bgColor={colors.sell}
 					/>
-				</OrderContainer>
-			</TitleContainer>
-			<Notice>{notice !== "" && notice}</Notice>
-			<CoinSet>
-				<TitleName>Coin</TitleName>
-				<TitlePrice>Price($)</TitlePrice>
-				<TitleQuantity>Quantity</TitleQuantity>
-				<TitleButton>Order</TitleButton>
-			</CoinSet>
+				</T.OrderContainer>
+			</T.TitleContainer>
+			<T.Notice>{notice !== "" && notice}</T.Notice>
+			<T.CoinSet>
+				<T.TitleName>Coin</T.TitleName>
+				<T.TitlePrice>Price($)</T.TitlePrice>
+				<T.TitleQuantity>Quantity</T.TitleQuantity>
+				<T.TitleButton>Order</T.TitleButton>
+			</T.CoinSet>
 			{init ? (
 				coins.map((coin: Coin, index: number) => (
-					<CoinSet key={index}>
-						<CoinName>{coin.code}</CoinName>
-						<CoinPrice>{coin.price}</CoinPrice>
-						<QuantityInput
+					<T.CoinSet key={index}>
+						<T.CoinName>{coin.code}</T.CoinName>
+						<T.CoinPrice>{coin.price}</T.CoinPrice>
+						<T.QuantityInput
 							placeholder={isLoggedIn ? "quantity" : ""}
 							{...register(`${coin.code} quantity`)}
 							disabled={!isLoggedIn}
 						/>
-						<OrderContainer>
-							<PostTrade
+						<T.OrderContainer>
+							<T.PostTrade
 								type="button"
 								value={side}
 								disabled={!isLoggedIn || trading}
 								onClick={() => orderPost(`${coin.code}`)}
 								bgColor={side === BUY ? colors.buy : colors.sell}
 							/>
-							<PostTrade
+							<T.PostTrade
 								type="button"
 								value={`${side} ALL`}
 								disabled={!isLoggedIn || trading}
 								onClick={() => orderAllPost(`${coin.code}`)}
 								bgColor={side === BUY ? colors.buy : colors.sell}
 							/>
-						</OrderContainer>
-					</CoinSet>
+						</T.OrderContainer>
+					</T.CoinSet>
 				))
 			) : (
-				<Loading>Loading,,</Loading>
+				<T.Loading>Loading,,</T.Loading>
 			)}
-			<RefreshContainer>
-				<RefreshNotice>{refreshNotice}</RefreshNotice>
-				<RefreshButton type={"button"} value={"🔄"} onClick={refresh} />
-			</RefreshContainer>
-			<RefreshContainer>
-				<RefreshNotice>
+			<T.RefreshContainer>
+				<T.RefreshNotice>{refreshNotice}</T.RefreshNotice>
+				<T.RefreshButton type={"button"} value={"🔄"} onClick={refresh} />
+			</T.RefreshContainer>
+			<T.RefreshContainer>
+				<T.RefreshNotice>
 					The price of coin from API doesn't change frequently. It's not a
 					problem. Sorry.
-				</RefreshNotice>
-			</RefreshContainer>
-		</Container>
+				</T.RefreshNotice>
+			</T.RefreshContainer>
+		</T.Container>
 	);
 };
 
