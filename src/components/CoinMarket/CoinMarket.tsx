@@ -3,7 +3,7 @@ import Title from "../Title";
 import {LOGIN_KEY, BUY, SIGNIN} from "../../modules/constants";
 import {getAllPrice, getAsset, loginByKey} from "../../modules/API";
 import TradingTable from "../TradingTable/TradingTable";
-import Account from "../Account/Account";
+import Account from "../Accounts/Account";
 import {Container, FullFrame} from "./CoinMarketStyle";
 
 const CoinMarket = () => {
