@@ -1,4 +1,5 @@
 # Coin to the Moon : Coin Trading Market
+![image](https://user-images.githubusercontent.com/40906871/144613952-c55274d0-6009-4e79-8f56-671824ddedd4.png)
 
 
 ## About the Project
