@@ -15,7 +15,7 @@ mongoose
 	.catch((e) => console.error(e));
 
 app.use(express.urlencoded({extended: true}));
-app.use((req, res, next) => {
+app.use((_, res, next) => {
 	res.append("Access-Control-Allow-Origin", "*");
 	res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
 	res.append("Access-Control-Allow-Headers", "Content-Type");
@@ -30,11 +30,11 @@ app.use("/coins", Routers.coinRouter);
 app.use("/assets", Routers.assetRouter);
 app.use("/trade", Routers.tradeRouter);
 
-app.use(function (req, res) {
+app.use(function (_, res) {
 	res.status(404).send("404 error : No Such Page");
 });
 
-app.use(function (err, req, res, next) {
+app.use(function (err, _, res, __) {
 	console.error(err.stack);
 	res.status(500).send("500 error : Check Your Fault");
 });
